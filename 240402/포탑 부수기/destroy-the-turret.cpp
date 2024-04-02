@@ -95,7 +95,7 @@ pair<int,int> find_max(const vector<vector<int>> &m){
 //N,y : 행
 //M,x : 열
 //레이저가 가능하면 방향 벡터를 반환. 가능하지 않다면 빈 벡터를 반환
-vector<int> find_root(vector<vector<int>> matrix, pair<int,int> start, pair<int,int> target){
+vector<int> find_root(const vector<vector<int>>& matrix, pair<int,int> start, pair<int,int> target){
     const int dx[] = {1,0,-1,0};    //우 하 좌 상
     const int dy[] = {0,1,0,-1};
     int N = matrix.size();
@@ -148,10 +148,12 @@ void bomb_attack_and_repair(vector<vector<int>>& matrix, const pair<int,int>& at
     int x = target.first;
     int y = target.second;
     matrix[y][x] -= damage;
+    if(matrix[y][x] < 0) matrix[y][x] = 0;
     for(int i = 0; i < 8; i++){
         int nx = x+dx[i];
         int ny = y+dy[i];
         matrix[ny][nx] -= damage/2;
+        if(matrix[y][x] < 0) matrix[y][x] = 0;
         no_repair.emplace_back(nx,ny);
     }
     repair(matrix,no_repair);
@@ -172,9 +174,21 @@ void laser_attack_and_repair(vector<vector<int>>& matrix, const pair<int,int>& a
         }else{
             matrix[y][x] -= attack_damage/2;
         }
+        if(matrix[y][x] < 0) matrix[y][x] = 0;
         no_repair.emplace_back(x,y);
     }
     repair(matrix,no_repair);
+}
+int find_remains(const vector<vector<int>>& m){
+    int ret = 0;
+    for(int i = 0; i < m.size(); i++){
+        for(int j = 0; j < m[0].size(); j++){
+            if(m[i][j] != 0){
+                ret++;
+            }else if(m[i][j] < 0) return -1;
+        }
+    }
+    return ret;
 }
 
 int main() {
@@ -215,6 +229,9 @@ int main() {
         //     }
         //     cout << endl;
         // }
+        int remain = find_remains(TURRETS);
+        if(remain == 1) break;
+        if(remain == -1) cout << "error code 0" << "\n";
         K--;
     }
     pair<int,int> answer = find_max(TURRETS);

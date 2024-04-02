@@ -240,6 +240,6 @@ int main() {
     //     cout << endl;
     // }
     pair<int,int> answer = find_max(TURRETS);
-    cout << TURRETS[2][2] << "\n";
+    cout << TURRETS[2][4] << "\n";
     return 0;
 }

@@ -233,12 +233,12 @@ int main() {
         K--;
     }
     
-    // for(int i = 0; i < N; i++){
-    //     for(int j = 0; j < M; j++){
-    //         cout << TURRETS[i][j] << "/";
-    //     }
-    //     cout << endl;
-    // }
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < M; j++){
+            //cout << TURRETS[i][j] << "/";
+        }
+        //cout << endl;
+    }
     pair<int,int> answer = find_max(TURRETS);
     cout << TURRETS[answer.second][answer.first] << "\n";
     return 0;

@@ -98,8 +98,8 @@ pair<int,int> find_max(const vector<vector<int>> &m){
 vector<int> find_root(const vector<vector<int>>& matrix, pair<int,int> start, pair<int,int> target){
     const int dx[] = {1,0,-1,0};    //우 하 좌 상
     const int dy[] = {0,1,0,-1};
-    int N = matrix.size();
-    int M = matrix[0].size();
+    const int N = matrix.size();
+    const int M = matrix[0].size();
     deque<pair<pair<int,int>,vector<int>>> Q;  //큐에 담기는 정보: 시작 좌표, 지금까지 경로
     vector<vector<int>> dist(N,vector<int>(M,INF));
     Q.emplace_back(start,vector<int>({}));
@@ -142,6 +142,8 @@ void repair(vector<vector<int>>& matrix, const vector<pair<int,int>> no_repair){
 void bomb_attack_and_repair(vector<vector<int>>& matrix, const pair<int,int>& attacker, const pair<int,int>& target, const int& damage){
     const int dx[] = {1,1,0,-1,-1,-1,0,1};
     const int dy[] = {0,1,1,1,0,-1,-1,-1};
+    const int N = matrix.size();
+    const int M = matrix[0].size();
     vector<pair<int,int>> no_repair;
     no_repair.push_back(attacker);
     no_repair.push_back(target);
@@ -150,8 +152,10 @@ void bomb_attack_and_repair(vector<vector<int>>& matrix, const pair<int,int>& at
     matrix[y][x] -= damage;
     if(matrix[y][x] < 0) matrix[y][x] = 0;
     for(int i = 0; i < 8; i++){
-        int nx = x+dx[i];
-        int ny = y+dy[i];
+        int nx = (x + dx[i]) % M;
+        nx = nx < 0 ? nx+M : nx;
+        int ny = (y + dy[i]) % N;
+        ny = ny < 0 ? ny+N : ny;
         matrix[ny][nx] -= damage/2;
         if(matrix[y][x] < 0) matrix[y][x] = 0;
         no_repair.emplace_back(nx,ny);

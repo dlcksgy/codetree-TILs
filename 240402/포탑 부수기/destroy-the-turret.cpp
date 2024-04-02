@@ -227,16 +227,17 @@ int main() {
         }else{
             laser_attack_and_repair(TURRETS,attacker,laser_root,attack_damage);
         }
-        // for(int i = 0; i < N; i++){
-        //     for(int j = 0; j < M; j++){
-        //         cout << TURRETS[i][j] << "/";
-        //     }
-        //     cout << endl;
-        // }
         int remain = find_remains(TURRETS);
         if(remain == 1) break;
         if(remain == -1) cout << "error code 0" << "\n";
         K--;
+    }
+    
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < M; j++){
+            cout << TURRETS[i][j] << "/";
+        }
+        cout << endl;
     }
     pair<int,int> answer = find_max(TURRETS);
     cout << TURRETS[answer.second][answer.first] << "\n";

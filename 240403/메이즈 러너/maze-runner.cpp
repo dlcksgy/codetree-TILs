@@ -186,8 +186,8 @@ void maze_spin(vector<vector<int>>& MAZE, pair<int,int> &out, vector<pair<int,in
         for(int i = 0; i < m; i++){
             for(int j = 0; j < m; j++){
                 MAZE[sy + i][sx + j] = temp[ly - j][sx + i];
-                MAZE[sy + i][sx + m+1 + j] = temp[ly - m+1 - j][sx + i];
-                MAZE[sy + m+1 + i][sx + m+1 + j] = temp[ly - m+1 - j][sx + m+1 + i];
+                MAZE[sy + i][sx + m+1 + j] = temp[ly - m - 1 - j][sx + i];
+                MAZE[sy + m+1 + i][sx + m+1 + j] = temp[ly - m - 1 - j][sx + m+1 + i];
                 MAZE[sy + m+1 + i][sx + j] = temp[ly - j][sx + m+1 + i];
             }
         }
@@ -244,7 +244,7 @@ int main() {
         // cout << "out: " << out.first << ", " << out.second << '\n';
         // for(int i = 0; i < N; i++){
         //     for(int j = 0; j < N; j++){
-        //         cout << MAZE[i][j] << "/";
+        //         cout << MAZE[i][j] << " ";
         //     }
         //     cout << '\n';
         // }
@@ -265,6 +265,20 @@ int main() {
         //     cout << spin_area[i] << ", ";
         // }cout << '\n';
         // cout << "//////////////////////" << '\n';
+
+
+        // for(int i = 0; i < N; i++){
+        //     for(int j = 0; j < N; j++){
+        //         cout << MAZE[i][j] << " ";
+        //     }
+        //     cout << '\n';
+        // }
+        // for(int i = 0; i < players.size(); i++){
+        //     cout << "(" << players[i].first+1 << ", " << players[i].second+1 << ") ";
+        // }cout << '\n';
+        // cout << "out: " << out.first+1 << ", " << out.second+1 << '\n';
+
+
         K--;
     }
     cout << distance_sum <<'\n';

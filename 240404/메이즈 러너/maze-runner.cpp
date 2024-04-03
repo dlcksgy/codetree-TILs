@@ -127,8 +127,9 @@ void spot_spin(vector<vector<int>>& MAZE, const bool &is_even, pair<int,int> &sp
         }
     }else{
         if(spot.first == sy + m){
-            spot.first = o_x - sx + ly;
+            spot.first = o_x - sx + sy;
             spot.second = lx - m;
+            //cout << "#debug2" << "\n";
         }else if(spot.second == sx + m){
             spot.first = ly - m;
             spot.second = lx - (o_y - sy);
@@ -157,7 +158,9 @@ void maze_spin(vector<vector<int>>& MAZE, pair<int,int> &out, vector<pair<int,in
     int size = ly - sy + 1;
     int m = size/2;
     bool is_even = size % 2 == 0;
+    //cout << "debug #1: " << out.first << ", " << out.second << '\n';
     spot_spin(MAZE, is_even, out, sy, sx, ly, lx);
+    //cout << "debug #3: " << out.first << ", " << out.second << '\n';
     for(int i = 0; i < players.size(); i++){
         if(sy <= players[i].first && players[i].first  <= ly && sx <= players[i].second && players[i].second <= lx ){
             spot_spin(MAZE, is_even, players[i], sy, sx, ly, lx);

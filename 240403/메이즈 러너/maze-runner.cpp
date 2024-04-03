@@ -52,30 +52,47 @@ vector<int> search_rectangle(const vector<vector<int>>& MAZE, const pair<int,int
     const int rx = out.second;
     int rectangle_min = INF;
     int px_tg,py_tg;
+    vector<int> small;
     //우선순위를 위한 정렬
-    sort(players.begin(), players.end(),comp_player);
+    //sort(players.begin(), players.end(),comp_player);
     //cout << "rect : ";
-    for(auto i = players.begin(); i != players.end(); i++){
-        int dif_y = ry - i->first;
+    for(int i = 0; i < players.size(); i++){
+        int dif_y = ry - players[i].first;
         dif_y = dif_y < 0 ? dif_y * -1 : dif_y;
-        int dif_x = rx - i->second;
+        int dif_x = rx - players[i].second;
         dif_x = dif_x < 0 ? dif_x * -1 : dif_x;
         int lg = dif_x > dif_y ? dif_x : dif_y;
         if(rectangle_min > lg){
             rectangle_min = lg;
-            py_tg = i->first;
-            px_tg = i->second;
+            small = vector<int>({i});
+        }else if(rectangle_min == lg){
+            small.push_back(i);
         }
         //cout << rectangle_min << " -> ";
         //cout << py_tg << "," << px_tg << " -> ";
     }
     //cout << '\n';
-    int ly = ry > py_tg ? ry : py_tg;
-    ly = rectangle_min > ly ? rectangle_min : ly;
-    int lx = rx > px_tg ? rx : px_tg;
-    lx = rectangle_min > lx ? rectangle_min : lx;
-    int sy = ly - rectangle_min;
-    int sx = lx - rectangle_min;
+    int sy, sx;
+    int ly = INF;
+    int lx = INF;
+    for(int i = 0; i < small.size();i++){
+        int ly_t,lx_t;
+        py_tg = players[small[i]].first;
+        px_tg = players[small[i]].second;
+        ly_t = ry > py_tg ? ry : py_tg;
+        ly_t = rectangle_min > ly_t ? rectangle_min : ly_t;
+        lx_t = rx > px_tg ? rx : px_tg;
+        lx_t = rectangle_min > lx_t ? rectangle_min : lx_t;
+        if(ly_t < ly){
+            ly = ly_t;
+            lx = lx_t;
+        }else if(lx_t < lx){
+            ly = ly_t;
+            lx = lx_t;
+        }
+    }
+    sy = ly - rectangle_min;
+    sx = lx - rectangle_min;
 
     return vector<int>({sy,sx,ly,lx});
 }

@@ -71,11 +71,12 @@ vector<int> search_rectangle(const vector<vector<int>>& MAZE, const pair<int,int
         //cout << rectangle_min << " -> ";
         //cout << py_tg << "," << px_tg << " -> ";
     }
-    //cout << '\n';
     int sy, sx;
     int ly = INF;
     int lx = INF;
+    // cout << "rect : ";
     for(int i = 0; i < small.size();i++){
+        // cout <<  i << ", ";
         int ly_t,lx_t;
         py_tg = players[small[i]].first;
         px_tg = players[small[i]].second;
@@ -86,11 +87,13 @@ vector<int> search_rectangle(const vector<vector<int>>& MAZE, const pair<int,int
         if(ly_t < ly){
             ly = ly_t;
             lx = lx_t;
-        }else if(lx_t < lx){
+        }else if(ly_t == ly && lx_t < lx){
             ly = ly_t;
             lx = lx_t;
         }
+        // cout << "[" <<ly_t << ", " << lx_t << "] / ";
     }
+    // cout << '\n';
     sy = ly - rectangle_min;
     sx = lx - rectangle_min;
 

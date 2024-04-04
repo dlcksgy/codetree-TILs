@@ -201,6 +201,34 @@ void maze_spin(vector<vector<int>>& MAZE, pair<int,int> &out, vector<pair<int,in
     }
 
 }
+void maze_spin2(vector<vector<int>>& MAZE, pair<int,int> &out, vector<pair<int,int>> &players,
+                            const int &sy, const int &sx, const int &ly, const int &lx){
+    int N = lx - sx + 1;
+    vector<vector<int>> temp(N,vector<int>(N));
+    for(int i = 0; i < N; i ++){
+        for(int j = 0; j < N; j++){
+            temp[i][j] = MAZE[sy+i][sx+j];
+            if(temp[i][j] > 0) temp[i][j]--;
+        }
+    }
+    for(int i = 0; i < N; i ++){
+        for(int j = 0; j < N; j++){
+            MAZE[sy+j][lx-i] = temp[i][j];
+        }
+    }
+    int of = out.first;
+    int os = out.second;
+    out.first = sy + (os - sx);
+    out.second = lx - (of - sy);
+    for(int i = 0; i < players.size(); i++){
+        if(sy <= players[i].first && players[i].first  <= ly && sx <= players[i].second && players[i].second <= lx ){
+            int pf = players[i].first;
+            int ps = players[i].second;
+            players[i].first = sy + (ps - sx);
+            players[i].second = lx - (pf - sy);
+        }
+    }
+}
 
 int escape_check(const pair<int,int> &out, vector<pair<int,int>> &players){
     int ret = 0;
@@ -261,7 +289,7 @@ int main() {
         escape_check(out,players);
         if(players.size() == 0) break;
         vector<int> spin_area = search_rectangle(MAZE,out,players);
-        maze_spin(MAZE,out,players,spin_area[0],spin_area[1],spin_area[2],spin_area[3]);
+        maze_spin2(MAZE,out,players,spin_area[0],spin_area[1],spin_area[2],spin_area[3]);
         
         // cout << "spin_area: ";
         // for(int i = 0; i < 4; i++){

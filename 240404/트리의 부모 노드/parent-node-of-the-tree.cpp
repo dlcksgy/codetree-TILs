@@ -33,11 +33,11 @@ int main() {
     while(!Q.empty()){
         int p_node = Q.front();
         Q.pop_front();
-        for(int i = 0; i < N+1; i++){
-            if(tree_graph[p_node].find(i) != tree_graph[p_node].end() && visited.find(i) == visited.end()){
-                Q.push_back(i);
-                visited.insert(i);
-                parent[i] = p_node;
+        for(unordered_set<int>::iterator i = tree_graph[p_node].begin(); i != tree_graph[p_node].end(); i++){
+            if(visited.find(*i) == visited.end()){
+                Q.push_back(*i);
+                visited.insert(*i);
+                parent[*i] = p_node;
             }
         }
     }
